@@ -13,8 +13,34 @@
     tools:context="islab.mobido.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Retrofit get data"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/RetrofitObject" />
+
+    <TextView
+        android:id="@+id/text_id_1"
+        android:layout_marginTop="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text_id_2"
+        android:layout_marginTop="175dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text_id_3"
+        android:layout_marginTop="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>
