@@ -25,10 +25,8 @@ public interface RetrofitObjectAPI {
      */
 
     @GET("Patient/4765?_format=json")
-    Call<Name> getNameDetails();
-
-    @GET("Patient/4765?_format=json")
     Call<Patient> getPatientDetails();
+
 
 //    @GET("Patient/4765?_format=json")
 //    Call<>

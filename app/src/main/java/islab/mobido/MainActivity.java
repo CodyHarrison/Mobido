@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
                 View VisibleObject = findViewById(R.id.RetrofitObject);
                 VisibleObject.setVisibility(View.GONE);
                 getRetrofitObject();
+//                getRetrofitArray();
             }
         });
 
@@ -91,37 +92,93 @@ public class MainActivity extends AppCompatActivity
 
         RetrofitObjectAPI service = retrofit.create(RetrofitObjectAPI.class);
 
-        Call<Name> callName = service.getNameDetails();
-//        callName.enqueue(new Callback<Name>() {
-//            @Override
-//            public void onResponse(Call<Name> call, Response<Name> response) {
-//                text_id_1.setText("Name: " + response.body().getUse());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Name> call, Throwable t) {
-//                text_id_1.setText("Verdammte kacke");
-//            }
-//        });
         /**
          * service.getPatientDetails aus der Klasse RetrofitObjectAPI
          **/
-        Call<Patient> callResource = service.getPatientDetails();
-        callResource.enqueue(new Callback<Patient>() {
+        Call<Patient> callPatient = service.getPatientDetails();
+        callPatient.enqueue(new Callback<Patient>() {
             @Override
             public void onResponse(Call<Patient> call, Response<Patient> response) {
                 /**
                  * getResourceType und getBirthDate aus der Klasse Patient
                  * */
                 text_id_1.setText("Resource Type: " + response.body().getResourceType());
-                text_id_2.setText("Bday: " + response.body().getBirthDate());
+                text_id_2.setText("ID: " + response.body().getId());
+                /**
+                 * response.body().getText().getStatus() -> Erst wird in der obersteb Ebene (Text) und dann in der unteren Ebene (Status) abgefragt.
+                 * */
+//                text_id_3.setText("Text: " + response.body().getText().getStatus());
+
+                /**
+                 * Erzeugung einer Variablen vom Typ patient und erhalten der Daten vom Server
+                 * Erzeugung einer Liste vom Typ Name und speichern der Ergebnisse der Methode getName()
+                 * */
+
+                Patient patient = response.body();
+
+                List<Name> names = patient.getName();
+
+                for (Name name : names) {
+                    List<String> nameHolder = name.getGiven();
+
+                    if (nameHolder.size() > 1) {
+                        String firstName = nameHolder.get(0);
+                        String secondName = nameHolder.get(1);
+                        text_id_3.setText("Vorname: " + firstName + " " + secondName);
+                    }
+
+                    System.out.println(name.getGiven());
+                    System.out.println(name.getFamily());
+                    System.out.println(name.getUse());
+                }
+
             }
 
             @Override
             public void onFailure(Call<Patient> call, Throwable t) {
-                text_id_1.setText("sictik");
+                Log.d("sictik", "harbiden");
             }
         });
+
+    }
+
+    //TODO: Herausfinden wie man Arrays in Objects einzeln ansprechen kann
+    //TODO: Eine Patientenliste mit Name und Vorname erstellen
+    //TODO: Herausfinden in welchem Feld man Dokumentationen tätigt
+    //TODO: Herausfinden wie man Dokumentation auf den Server schreibt
+    public void getRetrofitArray() {
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RetrofitArrayAPI service = retrofit.create(RetrofitArrayAPI.class);
+
+        Call<List<Patient>> callPatient = service.getPatientDetails();
+        callPatient.enqueue(new Callback<List<Patient>>() {
+            @Override
+            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
+                Patient patient = (Patient) response.body();
+
+                List<Name> names = patient.getName();
+
+                for (Name name : names) {
+                    text_id_3.setText("Name: " + name.getUse());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Patient>> call, Throwable t) {
+                text_id_3.setText("AMK");
+            }
+        });
+
 
     }
 
