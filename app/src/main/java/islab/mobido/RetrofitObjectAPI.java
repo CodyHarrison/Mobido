@@ -27,23 +27,7 @@ public interface RetrofitObjectAPI {
     @GET("Patient/4765?_format=json")
     Call<Patient> getPatientDetails();
 
+    @GET("Patient/{id}?format=json")
+    Call<Patient> getPatientDetailsById(@Path("id") String id);
 
-//    @GET("Patient/4765?_format=json")
-//    Call<>
-
-    /*@GET("Patient/{id}?_pretty=true&_format=html/json")
-    Call<List<Name>> getPatientName(@Path("id") int groupId);*/
-
-    /**
-
-     @GET("baseDstu2/Patient/3840?_pretty=true&_format=json") Call<Patient> getResourceType();
-
-     @GET("baseDstu2/Patient/3840?_pretty=true&_format=json") Call<Patient> getName();
-
-     @GET("baseDstu2/Patient/3840?_pretty=true&_format=json") Call<Patient> getTelecom();
-
-     @GET("baseDstu2/Patient/3840?_pretty=true&_format=json")
-    Call<Patient> getGender();
-
-     */
 }
