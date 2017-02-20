@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         /**
          * service.getPatientDetails aus der Klasse RetrofitObjectAPI
          **/
-        Call<Patient> callPatient = service.getPatientDetails();
+        Call<Patient> callPatient = service.getPatientDetailsById("4765");
         callPatient.enqueue(new Callback<Patient>() {
             @Override
             public void onResponse(Call<Patient> call, Response<Patient> response) {
